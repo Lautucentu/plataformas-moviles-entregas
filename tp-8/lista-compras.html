@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Lista de Compras</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+</head>
+<body>
+
+    <div class="container my-1 my-sm-2 my-md-4 my-lg-5">
+        <h1>Lista de Compras</h1>
+        <p class="lead">El objetivo es construir una lista de compras donde se puedan agregar productos.</p>
+        <h2 class="h3">Objetivos Adicionales</h2>
+        <ol>
+            <li>Agregar funcionalidad para limpiar la lista, eliminando todos los productos.</li>
+            <li>Agregar opción para eliminar cada elemento de forma individual.</li>
+            <li>Ordenar alfabéticamente la lista de productos.</li>
+        </ol>
+
+        <div class="card">
+            <div class="card-body">
+                <h2>Listado de Productos</h2>
+                <ul id="lista-productos">
+                    
+                </ul>
+
+                <hr class="hr">
+
+                <h2>Agregar Producto</h2>
+                <form id="form-producto">
+                    <div class="input-group mb-3">
+                        <input type="text" class="form-control" aria-label="Nombre del Producto">
+
+                        <button class="btn btn-primary" type="submit" >Agregar Producto</button>
+                        
+                    </div>
+                </form>
+                <button class="btn btn-secondary" type="button" onclick="eliminartodo()" >Eliminar Producto</button>
+                <button class="btn btn-info" type="button" onclick="alfabéticamente()" >alfabaticamente</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
+    <script type="text/javascript">
+        /**
+         * agregarProducto()
+         * esta función se va a llamar cuando el usuario envía el formulario con el nombre del producto para agregar.
+         */
+        function agregarProducto(nombreProducto) 
+        {
+            let listaul= document.querySelector('ul#lista-productos');
+            let nuevo_el= document.createElement('li');
+                nuevo_el.innerText= nombreProducto;
+            let boton =document.createElement('button');
+            boton.innerText="Eliminar";
+            nuevo_el.appendChild(boton);
+            boton.setAttribute('class','btn btn-danger')
+            boton.addEventListener('click',EliminarProducto);
+            listaul.append(nuevo_el);
+        }
+
+        function eliminartodo(e) 
+        {
+            let listaul= document.querySelector('ul#lista-productos')
+            let lista= listaul.querySelectorAll('li');
+            lista.forEach((a) => {
+                a.remove();                
+            });
+         
+        }
+
+        function EliminarProducto(e) 
+        {
+           e.target.parentElement.remove();
+
+        }
+        function alfabéticamente() 
+        {
+            const ul = document.querySelector('ul');
+
+            Array.from(ul.getElementsByTagName('li'))
+            .sort((a, b) => a.textContent.localeCompare(b.textContent))
+            .forEach(li => ul.appendChild(li));
+        }
+
+        function handlerFormulario(e) {
+            e.preventDefault();
+            const input = e.target.querySelector('input');
+            const nombreProducto = input.value;
+            input.value = "";
+            agregarProducto(nombreProducto);
+        }
+
+        document.querySelector('form').addEventListener('submit', handlerFormulario);
+    </script>
+</body>
+</html>

@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Editor de Texto</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+    <style type="text/css">
+        .bold {
+            font-weight: bold;
+        }
+        .italic
+        {
+            font-style: italic;
+        }
+        .underline
+        {
+            text-decoration: underline;
+        }
+        .color
+        {
+            color: rgb(255, 15, 115);
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container my-1 my-sm-2 my-md-4 my-lg-5">
+        <h1>Editor de Texto</h1>
+        <p class="lead">El objetivo es construir un muy simple Editor de Texto donde se puedan aplicar distintos estilos a un texto.</p>
+        <h2 class="h3">Objetivos Adicionales</h2>
+        <ol>
+            <li>Agregar un nuevo botón con un estilo adicional (puede ser para aplicar un color al texto, por ejemplo).</li>
+            <li>Agregar la posibilidad de editar el texto, con un input para escribir un nuevo texto.</li>
+            <li>Mostrar el estado actual de cada estilo en el botón (si está activado o no). Puede ser cambiando el color o el texto del propio botón.</li>
+            <li>Agregar la funcionalidad de modificar el tamaño del texto.</li>
+        </ol>
+
+        <div class="card">
+            <div class="card-body">
+                <h2>Texto</h2>
+
+                <p class="texto" id="texto">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec elementum auctor libero, vel imperdiet est. Etiam blandit facilisis ex, nec cursus metus pharetra quis. Fusce imperdiet nisl nibh, ac aliquet ante elementum vitae.</p>
+
+                <hr class="hr">
+                <label for="tamanotexto" class="form-label">tamaño de texto</label>
+                <input type="range" id="tamanotexto" class="form range col-12 col-md-12" min="10" max="40" step="1" value="25" >
+            
+                <div>
+                    <h2>Agregar texto</h2>
+                    <textarea type="text" class=" col-12 col-md-12" id="input"></textarea>
+                    <div class="col-12 col-md-4 my-1">
+                    <button id="btn-agregar" class="btn d-block w-100 btn-primary" data-funcion="texto">
+                        Agregar
+                    </button>
+                    </div>
+                </div>
+
+                <hr class="hr">
+
+                <h2>Opciones de Formato</h2>
+                <div class="row">
+                    <div class="col-12 col-md-4 my-1">
+                        <button id="btn-negrita" class="btn d-block w-100 btn-primary" data-funcion="negrita">
+                            Bold (Negrita)
+                        </button>
+                    </div>
+                    <div class="col-12 col-md-4 my-1">
+                        <button id="btn-cursiva" class="btn d-block w-100 btn-primary" data-funcion="cursiva">
+                            Italic (Cursiva)
+                        </button>
+                    </div>
+                    <div class="col-12 col-md-4 my-1">
+                        <button id="btn-subrayado" class="btn d-block w-100 btn-primary" data-funcion="subrayado">
+                            Underline (Subrayado)
+                        </button>
+                    </div>
+                    <div class="col-12 col-md-4 my-1">
+                        <button id="btn-color" class="btn d-block w-100 btn-primary" data-funcion="color">
+                            Color (color)
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
+    <script type="text/javascript">
+
+        /**
+         * funcionNegrita()
+         * esta función se va a llamar cuando el usuario selecciona la opción Bold (negrita).
+         */
+        function funcionNegrita() {
+            // su implementación
+            // document.getElementById('texto').style.fontWeight='bold';
+            texto= document.getElementById('texto');
+            texto.classList.toggle('bold');
+            document.getElementById('btn-negrita').classList.toggle('btn-danger');
+        }
+
+        /**
+         * funcionCursiva()
+         * esta función se va a llamar cuando el usuario selecciona la opción Bold (negrita).
+         */
+        function funcionCursiva() {
+            // su implementación
+            texto= document.getElementById('texto').classList.toggle('italic');
+            document.getElementById('btn-cursiva').classList.toggle('btn-danger');
+        }
+
+        /**
+         * funcionSubrayado()
+         * esta función se va a llamar cuando el usuario selecciona la opción Bold (negrita).
+         */
+        function funcionSubrayado() {
+            // su implementación
+            texto= document.getElementById('texto').classList.toggle('underline');
+            document.getElementById('btn-subrayado').classList.toggle('btn-danger');
+        }
+        
+        function funcioncolor()
+        {
+            texto= document.getElementById('texto');
+            texto.classList.toggle('color');
+            document.getElementById('btn-color').classList.toggle('btn-danger');
+        }
+        function agregartexto() 
+        {
+             const boton = document.getElementById('btn-agregar');
+            boton.addEventListener("mousedown", function() {
+                boton.classList.add('btn-danger');
+            });
+
+            boton.addEventListener("mouseup", function() {
+                boton.classList.remove('btn-danger');
+            });
+            
+            input_text = document.getElementById('input');
+            parrafo = document.getElementById('texto');
+
+            parrafo.innerText = input_text.value;
+            
+        }
+
+        function handlerBoton(e) {
+            const funcionBoton = e.target.dataset.funcion;
+            switch (funcionBoton) {
+                case 'negrita':
+                    funcionNegrita();
+                    break;
+                case 'cursiva':
+                    funcionCursiva();
+                    break;
+                case 'subrayado':
+                    funcionSubrayado();
+                    break;
+                case 'color':
+                    funcioncolor();
+                    break;
+                case 'texto':
+                    agregartexto();
+                    break;
+            }
+        }
+        document.querySelectorAll('button.btn').forEach(e => e.addEventListener('click', handlerBoton));
+
+        slider= document.getElementById('tamanotexto');
+            parrafo= document.getElementById('texto');
+            // asignar el valor como tamaño de texto
+            slider.addEventListener("input",function () {
+                const fontSize = slider.value + "px";
+                parrafo.style.fontSize = fontSize;
+
+            })
+        // document.getElementById('tamanotexto').addEventListener('change',tamanoletra);
+    </script>
+</body>
+</html>
